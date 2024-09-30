@@ -1,23 +1,25 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
 const port = process.env.PORT || 4000;
 
-async function main() {
-  await mongoose.connect(
-    "mongodb+srv://hotels:hotels1221@hotels-cluster.bu0ud.mongodb.net/?retryWrites=true&w=majority&appName=hotels-cluster"
-  );
+// parser options
+app.use(express.json());
+app.use(cors());
 
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+async function main() {
+  await mongoose.connect(process.env.MONGODB_URL);
+
+  app.get("/", (req, res) => {
+    res.send("Hello world");
+  });
 }
 
 main()
   .then(() => console.log("Database Connected...."))
   .catch((err) => console.log(err));
-
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
 
 app.listen(port, () => {
   console.log(`Running on ${port}...`);
