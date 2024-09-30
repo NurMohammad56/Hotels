@@ -1,4 +1,5 @@
 const express = require("express");
+const router = require("./src/routes/api.js");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -24,3 +25,6 @@ main()
 app.listen(port, () => {
   console.log(`Running on ${port}...`);
 });
+
+// Managing BackEnd Api
+app.use("/api/v1", router);
