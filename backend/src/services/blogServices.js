@@ -1,7 +1,7 @@
 const { query } = require("express");
 const blogModel = require("../models/blogModel");
 
-// Create
+// Create blog
 const createBlog = async (req) => {
   try {
     let newPost = new blogModel({ ...req.body });
@@ -12,7 +12,7 @@ const createBlog = async (req) => {
   }
 };
 
-// Read
+// Read blog
 const getBlog = async (req) => {
   try {
     const { search, category, location } = req.query;
@@ -59,9 +59,28 @@ const getSingleBlog = async (req) => {
     let get = await blogModel.findById(getID);
     if (!get) {
       return { status: "Failed", message: "Blog not found" };
-    } else {
-      return { status: "success", data: get };
     }
+
+    // TODO: with also fetch comment related to the post
+    return { status: "success", data: get };
+  } catch (error) {
+    return { status: "fail", message: "Internal error !" };
+  }
+};
+
+// Update blog
+const updateBlog = async (req) => {
+  try {
+    let getID = req.params.id;
+    let updatedBlog = await blogModel.findByIdAndUpdate(
+      getID,
+      { ...req.body },
+      { new: true }
+    );
+    if (!updatedBlog) {
+      return { status: "Failed", message: "Blog not updated" };
+    }
+    return { status: "Blog updated successfully", data: updatedBlog };
   } catch (error) {
     return { status: "fail", message: "Internal error !" };
   }
@@ -71,4 +90,5 @@ module.exports = {
   createBlog,
   getBlog,
   getSingleBlog,
+  updateBlog,
 };
