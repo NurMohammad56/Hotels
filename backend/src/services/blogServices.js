@@ -48,11 +48,27 @@ const getBlog = async (req) => {
     let getBlog = await blogModel.find(query).sort({ createdAt: -1 });
     return { status: "sucess", data: getBlog };
   } catch (error) {
-    return { status: "fail", message: "Error creating post !" };
+    return { status: "fail", message: "Error getting blog !" };
+  }
+};
+
+// Get single blog by id
+const getSingleBlog = async (req) => {
+  try {
+    let getID = req.params.id;
+    let get = await blogModel.findById(getID);
+    if (!get) {
+      return { status: "Failed", message: "Blog not found" };
+    } else {
+      return { status: "success", data: get };
+    }
+  } catch (error) {
+    return { status: "fail", message: "Internal error !" };
   }
 };
 
 module.exports = {
   createBlog,
   getBlog,
+  getSingleBlog,
 };
