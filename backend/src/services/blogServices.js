@@ -45,7 +45,7 @@ const getBlog = async (req) => {
       };
     }
 
-    let getBlog = await blogModel.find(query);
+    let getBlog = await blogModel.find(query).sort({ createdAt: -1 });
     return { status: "sucess", data: getBlog };
   } catch (error) {
     return { status: "fail", message: "Error creating post !" };
