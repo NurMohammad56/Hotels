@@ -1,5 +1,7 @@
+const { query } = require("express");
 const blogModel = require("../models/blogModel");
 
+// Create
 const createBlog = async (req) => {
   try {
     let newPost = new blogModel({ ...req.body });
@@ -10,9 +12,40 @@ const createBlog = async (req) => {
   }
 };
 
+// Read
 const getBlog = async (req) => {
   try {
-    let getBlog = await blogModel.find();
+    const { search, category, location } = req.query;
+
+    let query = {};
+    // Search Title, Content
+    if (search) {
+      query = {
+        ...query,
+        $or: [
+          { title: { $regex: search, $options: "i" } },
+          { content: { $regex: search, $options: "i" } },
+        ],
+      };
+    }
+
+    // Category
+    if (category) {
+      query = {
+        ...query,
+        category,
+      };
+    }
+
+    // Location
+    if (location) {
+      query = {
+        ...query,
+        location,
+      };
+    }
+
+    let getBlog = await blogModel.find(query);
     return { status: "sucess", data: getBlog };
   } catch (error) {
     return { status: "fail", message: "Error creating post !" };

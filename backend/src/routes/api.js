@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { createBlogs, getBlogs } = require("../controllers/blogController");
 
-// Get all blogs
+// Read all blogs
 router.get("/blog", getBlogs);
 
 // Create a blog post
