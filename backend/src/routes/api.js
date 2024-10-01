@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const { createBlogs } = require("../controllers/blogController");
+const { createBlogs, getBlogs } = require("../controllers/blogController");
 
 // Get all blogs
-router.get("/blog", (req, res) => {
-  res.send("This is blog");
-});
+router.get("/blog", getBlogs);
 
 // Create a blog post
 router.post("/create-blog", createBlogs);
