@@ -6,6 +6,7 @@ const {
   getBlogs,
   getSingleBlogs,
   updateBlogs,
+  deleteBlogs,
 } = require("../controllers/blogController");
 
 // Create a blog post
@@ -19,5 +20,8 @@ router.get("/blog/:id", getSingleBlogs);
 
 // Update blog
 router.patch("/update-blog/:id", updateBlogs);
+
+// Delete blog
+router.delete("/blog/:id", deleteBlogs);
 
 module.exports = router;

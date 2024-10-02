@@ -86,9 +86,26 @@ const updateBlog = async (req) => {
   }
 };
 
+// Delete blog
+const deleteBlog = async (req) => {
+  try {
+    let getID = req.params.id;
+    let deleteBlog = await blogModel.findByIdAndDelete(getID);
+
+    if (!deleteBlog) {
+      return { status: "Failed", message: "Blog not deleted" };
+    }
+
+    return { status: "Blog deleted successfully", data: deleteBlog };
+  } catch (error) {
+    return { status: "Error deleting blog", message: "Internal error !" };
+  }
+};
+
 module.exports = {
   createBlog,
   getBlog,
   getSingleBlog,
   updateBlog,
+  deleteBlog,
 };
