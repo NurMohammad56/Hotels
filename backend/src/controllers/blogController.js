@@ -4,6 +4,7 @@ const {
   getSingleBlog,
   updateBlog,
   deleteBlog,
+  relatedBlog,
 } = require("../services/blogServices");
 
 exports.createBlogs = async (req, res) => {
@@ -28,5 +29,9 @@ exports.updateBlogs = async (req, res) => {
 
 exports.deleteBlogs = async (req, res) => {
   let result = await deleteBlog(req);
+  return res.status(200).json(result);
+};
+exports.findRelatedBlogs = async (req, res) => {
+  let result = await relatedBlog(req);
   return res.status(200).json(result);
 };

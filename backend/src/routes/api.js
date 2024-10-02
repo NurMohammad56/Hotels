@@ -7,6 +7,7 @@ const {
   getSingleBlogs,
   updateBlogs,
   deleteBlogs,
+  findRelatedBlogs,
 } = require("../controllers/blogController");
 
 // Create a blog post
@@ -23,5 +24,8 @@ router.patch("/update-blog/:id", updateBlogs);
 
 // Delete blog
 router.delete("/blog/:id", deleteBlogs);
+
+// Find related blog
+router.get("/related-blog/:id", findRelatedBlogs);
 
 module.exports = router;

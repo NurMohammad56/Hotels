@@ -102,10 +102,43 @@ const deleteBlog = async (req) => {
   }
 };
 
+// Related posts
+const relatedBlog = async (req) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return { status: "Post id is not required", message: "Failed" };
+    }
+
+    const blog = await blogModel.findById(id);
+
+    if (!blog) {
+      return { status: "Post is not found", message: "Failed" };
+    }
+
+    const titleRegex = new RegExp(blog.title.split(" ").join("|"), "i");
+
+    const relatedQuery = {
+      _id: { $ne: id },
+      title: { $regex: titleRegex },
+    };
+
+    const relatedBlog = await blogModel.find(relatedQuery);
+
+    return { status: "Here are the related blog", data: relatedBlog };
+  } catch (error) {
+    return {
+      status: "Error fetching related blog",
+      message: "Internal error !",
+    };
+  }
+};
+
 module.exports = {
   createBlog,
   getBlog,
   getSingleBlog,
   updateBlog,
   deleteBlog,
+  relatedBlog,
 };
