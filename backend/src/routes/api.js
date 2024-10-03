@@ -12,7 +12,10 @@ const {
 } = require("../controllers/blogController");
 
 // Comment Controller
-const { createComments } = require("../controllers/commentController");
+const {
+  createComments,
+  getComments,
+} = require("../controllers/commentController");
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<BLOG ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Create a blog post
@@ -29,6 +32,9 @@ router.delete("/blog/:id", deleteBlogs);
 router.get("/related-blog/:id", findRelatedBlogs);
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENT ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// Post comment
 router.post("/post-comment", createComments);
+// Get comment
+router.get("/all-comment", getComments);
 
 module.exports = router;

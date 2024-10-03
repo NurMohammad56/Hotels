@@ -1,5 +1,6 @@
 const commentModel = require("../models/commentModel");
 
+// Post comment
 const createComment = async (req) => {
   try {
     const newComment = new commentModel(req.body);
@@ -11,6 +12,17 @@ const createComment = async (req) => {
   }
 };
 
+// Get all comment
+const getComment = async () => {
+  try {
+    let allComment = await commentModel.countDocuments({});
+    return { status: "All comments", data: allComment };
+  } catch (error) {
+    console.error("Error getting comments", error);
+    return { status: "Error getting comments", message: "Internal error !" };
+  }
+};
 module.exports = {
   createComment,
+  getComment,
 };
