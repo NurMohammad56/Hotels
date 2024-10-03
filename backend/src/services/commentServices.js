@@ -22,6 +22,7 @@ const getComment = async () => {
     return { status: "Error getting comments", message: "Internal error !" };
   }
 };
+
 module.exports = {
   createComment,
   getComment,

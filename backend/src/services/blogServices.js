@@ -1,5 +1,6 @@
 const { query } = require("express");
 const blogModel = require("../models/blogModel");
+const commentModel = require("../models/commentModel");
 
 // Create blog
 const createBlog = async (req) => {
@@ -60,8 +61,11 @@ const getSingleBlog = async (req) => {
     if (!get) {
       return { status: "Failed", message: "Blog not found" };
     }
+    // specific comment
+    let comment = await commentModel
+      .find({ postID: getID })
+      .populate("user", "username, email");
 
-    // TODO: with also fetch comment related to the post
     return { status: "success", data: get };
   } catch (error) {
     return { status: "fail", message: "Internal error !" };
@@ -95,6 +99,9 @@ const deleteBlog = async (req) => {
     if (!deleteBlog) {
       return { status: "Failed", message: "Blog not deleted" };
     }
+
+    // Deleted comment
+    // await commentModel.deleteMany({ postID: getID });
 
     return { status: "Blog deleted successfully", data: deleteBlog };
   } catch (error) {
