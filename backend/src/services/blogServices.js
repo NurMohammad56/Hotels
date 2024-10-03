@@ -93,15 +93,15 @@ const updateBlog = async (req) => {
 // Delete blog
 const deleteBlog = async (req) => {
   try {
-    let getID = req.params.id;
-    let deleteBlog = await blogModel.findByIdAndDelete(getID);
+    let postID = req.params.id;
+    let deleteBlog = await blogModel.findByIdAndDelete(postID);
 
     if (!deleteBlog) {
       return { status: "Failed", message: "Blog not deleted" };
     }
 
     // Deleted comment
-    // await commentModel.deleteMany({ postID: getID });
+    await commentModel.deleteMany({ postID: postID });
 
     return { status: "Blog deleted successfully", data: deleteBlog };
   } catch (error) {
