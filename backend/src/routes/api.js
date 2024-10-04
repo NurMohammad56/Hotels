@@ -17,6 +17,9 @@ const {
   getComments,
 } = require("../controllers/commentController");
 
+// User Authentication controller
+const { registerUsers } = require("../controllers/authUserController");
+
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<BLOG ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Create a blog post
 router.post("/create-blog", createBlogs);
@@ -38,5 +41,7 @@ router.post("/post-comment", createComments);
 router.get("/all-comment", getComments);
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<USER AUTHENTICATION ROUTES>>>>>>>>>>>>>>>>>>>>>>>>
+// Register
+router.post("/register", registerUsers);
 
 module.exports = router;
