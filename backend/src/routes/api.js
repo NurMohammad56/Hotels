@@ -37,4 +37,6 @@ router.post("/post-comment", createComments);
 // Get comment
 router.get("/all-comment", getComments);
 
+// <<<<<<<<<<<<<<<<<<<<<<<<<<USER AUTHENTICATION ROUTES>>>>>>>>>>>>>>>>>>>>>>>>
+
 module.exports = router;
