@@ -22,10 +22,25 @@ const userLogin = async (req) => {
     const { email, password } = req.body;
     let user = await userModel.findOne({ email });
     if (!user) {
-      return { status: "User not found" };
+      return { status: "User not found", message: "Please enter valid email" };
     }
 
-    let isPassword = await userModel.comparePassword(password);
+    let isPassword = await user.comparePass(password);
+    if (!isPassword) {
+      return { status: "Invalid password", message: "Enter valid password" };
+    }
+
+    // TODO: Generate token here
+
+    return {
+      status: "Login Success",
+      user: {
+        _id: user._id,
+        email: user.email,
+        username: user.username,
+        role: user.role,
+      },
+    };
   } catch (error) {
     console.error("Login failed", error);
     return { status: "Login failed", message: "Internal error !" };
