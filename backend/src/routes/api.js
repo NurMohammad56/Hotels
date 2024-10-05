@@ -18,7 +18,10 @@ const {
 } = require("../controllers/commentController");
 
 // User Authentication controller
-const { registerUsers } = require("../controllers/authUserController");
+const {
+  registerUsers,
+  loginUsers,
+} = require("../controllers/authUserController");
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<BLOG ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Create a blog post
@@ -43,5 +46,7 @@ router.get("/all-comment", getComments);
 // <<<<<<<<<<<<<<<<<<<<<<<<<<USER AUTHENTICATION ROUTES>>>>>>>>>>>>>>>>>>>>>>>>
 // Register
 router.post("/register", registerUsers);
+// Login
+router.post("/login", loginUsers);
 
 module.exports = router;

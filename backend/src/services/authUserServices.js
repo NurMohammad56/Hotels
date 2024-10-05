@@ -1,5 +1,6 @@
 const userModel = require("../models/authUserModel");
 
+// User register
 const registerUser = async (req) => {
   try {
     const { email, username, password } = req.body;
@@ -15,6 +16,16 @@ const registerUser = async (req) => {
   }
 };
 
+// User login
+const userLogin = async (req) => {
+  try {
+  } catch (error) {
+    console.error("Login failed", error);
+    return { status: "Login failed", message: "Internal error !" };
+  }
+};
+
 module.exports = {
   registerUser,
+  userLogin,
 };
