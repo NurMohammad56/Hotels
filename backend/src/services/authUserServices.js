@@ -19,6 +19,13 @@ const registerUser = async (req) => {
 // User login
 const userLogin = async (req) => {
   try {
+    const { email, password } = req.body;
+    let user = await userModel.findOne({ email });
+    if (!user) {
+      return { status: "User not found" };
+    }
+
+    let isPassword = await userModel.comparePassword(password);
   } catch (error) {
     console.error("Login failed", error);
     return { status: "Login failed", message: "Internal error !" };

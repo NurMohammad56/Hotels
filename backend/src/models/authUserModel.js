@@ -38,5 +38,10 @@ userModel.pre("save", async function (next) {
   next();
 });
 
+// Compare password when login
+userModel.method.comparePassword = function (givenPass) {
+  return bcrypt.compare(givenPass, this.password);
+};
+
 const user = model("User", userModel);
 module.exports = user;
