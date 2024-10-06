@@ -1,4 +1,5 @@
 const userModel = require("../models/authUserModel");
+const generateToken = require("../middlewares/generateToken");
 
 // User register
 const registerUser = async (req) => {
@@ -30,7 +31,8 @@ const userLogin = async (req) => {
       return { status: "Invalid password", message: "Enter valid password" };
     }
 
-    // TODO: Generate token here
+    // Jwt token
+    const token = await generateToken(user._id);
 
     return {
       status: "Login Success",
