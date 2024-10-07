@@ -20,7 +20,10 @@ const {
 } = require("../controllers/commentController");
 
 // User Authentication controller
-const { registerUsers } = require("../controllers/authUserController");
+const {
+  registerUsers,
+  allUsers,
+} = require("../controllers/authUserController");
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<BLOG ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Create a blog post
@@ -95,5 +98,7 @@ router.post("/logout", (req, res) => {
     res.status(500).json({ message: "Logout failed !" });
   }
 });
+// Get all user
+router.get("/all-user", allUsers);
 
 module.exports = router;

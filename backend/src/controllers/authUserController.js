@@ -1,6 +1,10 @@
-const { registerUser, userLogin } = require("../services/authUserServices");
+const { registerUser, allUser } = require("../services/authUserServices");
 
 exports.registerUsers = async (req, res) => {
   let result = await registerUser(req);
+  return res.status(200).json(result);
+};
+exports.allUsers = async (req, res) => {
+  let result = await allUser(req);
   return res.status(200).json(result);
 };

@@ -18,6 +18,20 @@ const registerUser = async (req) => {
   }
 };
 
+const allUser = async (req) => {
+  try {
+    const user = await userModel.find({}, "id email role");
+    return { status: "Users found successfully", user };
+  } catch (error) {
+    console.error("Failed to load all data", error);
+    return {
+      status: "Failed to fetch user",
+      message: "Internal error !",
+    };
+  }
+};
+
 module.exports = {
   registerUser,
+  allUser,
 };
