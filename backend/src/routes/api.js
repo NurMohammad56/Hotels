@@ -3,6 +3,7 @@ const router = express.Router();
 const generateToken = require("../middlewares/generateToken");
 const userModel = require("../models/authUserModel");
 const authentication = require("../middlewares/verifyToken");
+const isAdmin = require("../middlewares/isAdmin");
 
 // Blog Controller
 const {
@@ -30,7 +31,7 @@ const {
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<BLOG ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Create a blog post
-router.post("/create-blog", authentication, createBlogs);
+router.post("/create-blog", authentication, isAdmin, createBlogs);
 // Read all blogs
 router.get("/blog", getBlogs);
 // Get single blog by id

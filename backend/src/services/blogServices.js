@@ -4,7 +4,7 @@ const commentModel = require("../models/commentModel");
 // Create blog
 const createBlog = async (req) => {
   try {
-    let newPost = new blogModel({ ...req.body }); //todo author: req.userId
+    let newPost = new blogModel({ ...req.body, author: req.userId });
     await newPost.save();
     return { status: "success", data: newPost };
   } catch (error) {

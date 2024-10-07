@@ -14,7 +14,7 @@ const verifyToken = async (req, res, next) => {
 
     let decoded = jwt.verify(token, JWT_SECRET);
     if (!decoded.userId) {
-      res.status(401).send({ message: "Invalid token provided" });
+      return { status: "Invalid token provided" };
     }
 
     req.userId = decoded.userId;
@@ -22,7 +22,7 @@ const verifyToken = async (req, res, next) => {
     next();
   } catch (error) {
     console.error("Error verify token");
-    res.status(401).send({ message: "invalid token" });
+    return { status: "invalid token" };
   }
 };
 
