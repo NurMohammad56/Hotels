@@ -21,7 +21,7 @@ const registerUser = async (req) => {
 // All user
 const allUser = async (req) => {
   try {
-    const user = await userModel.find({}, "id email role");
+    const user = await userModel.find({}, "id username email role");
     return { status: "Users found successfully", user };
   } catch (error) {
     console.error("Failed to load all data", error);
@@ -50,8 +50,27 @@ const deleteUser = async (req) => {
   }
 };
 
+// Update user
+const updateUser = async (req) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+    const user = await userModel.findByIdAndUpdate(id, { role }, { new: true });
+    if (!user) {
+      return { status: "User not found" };
+    }
+    return { status: "User role updated successfully", user };
+  } catch (error) {
+    return {
+      status: "User not updated",
+      message: "Internal error !",
+    };
+  }
+};
+
 module.exports = {
   registerUser,
   allUser,
   deleteUser,
+  updateUser,
 };

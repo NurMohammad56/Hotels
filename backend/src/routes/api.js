@@ -24,6 +24,7 @@ const {
   registerUsers,
   allUsers,
   deleteUsers,
+  updateUsers,
 } = require("../controllers/authUserController");
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<BLOG ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -102,6 +103,8 @@ router.post("/logout", (req, res) => {
 // Get all user
 router.get("/all-user", allUsers);
 // Delete a user
-router.delete("/user/:id", deleteUsers);
+router.delete("/delete-user/:id", deleteUsers);
+// Update a user
+router.put("/update-user/:id", updateUsers);
 
 module.exports = router;
