@@ -85,5 +85,15 @@ router.post("/login", async (req, res) => {
     return { status: "Login failed", message: "Internal error !" };
   }
 });
+// Logout
+router.post("/logout", (req, res) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).send({ message: "Logout successful" });
+  } catch (error) {
+    console.error("Failed to logout", error);
+    res.status(500).json({ message: "Logout failed !" });
+  }
+});
 
 module.exports = router;
