@@ -18,6 +18,7 @@ const registerUser = async (req) => {
   }
 };
 
+// All user
 const allUser = async (req) => {
   try {
     const user = await userModel.find({}, "id email role");
@@ -31,7 +32,26 @@ const allUser = async (req) => {
   }
 };
 
+// Delete a user
+const deleteUser = async (req) => {
+  try {
+    const { id } = req.params;
+    const user = await userModel.findByIdAndDelete(id);
+    if (!user) {
+      return { status: "Users not found" };
+    }
+    return { status: "Users deleted successfully" };
+  } catch (error) {
+    console.error("Error deleting user", error);
+    return {
+      status: "User not deleted",
+      message: "Internal error !",
+    };
+  }
+};
+
 module.exports = {
   registerUser,
   allUser,
+  deleteUser,
 };

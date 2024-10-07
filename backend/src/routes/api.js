@@ -23,6 +23,7 @@ const {
 const {
   registerUsers,
   allUsers,
+  deleteUsers,
 } = require("../controllers/authUserController");
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<BLOG ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -100,5 +101,7 @@ router.post("/logout", (req, res) => {
 });
 // Get all user
 router.get("/all-user", allUsers);
+// Delete a user
+router.delete("/user/:id", deleteUsers);
 
 module.exports = router;
