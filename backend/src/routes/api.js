@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const generateToken = require("../middlewares/generateToken");
+const userModel = require("../models/authUserModel");
 
 // Blog Controller
 const {
@@ -18,10 +20,7 @@ const {
 } = require("../controllers/commentController");
 
 // User Authentication controller
-const {
-  registerUsers,
-  loginUsers,
-} = require("../controllers/authUserController");
+const { registerUsers } = require("../controllers/authUserController");
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<BLOG ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Create a blog post
@@ -47,6 +46,44 @@ router.get("/all-comment", getComments);
 // Register
 router.post("/register", registerUsers);
 // Login
-router.post("/login", loginUsers);
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    let user = await userModel.findOne({ email });
+    if (!user) {
+      res
+        .status(400)
+        .json({ message: "User not found, please provide valid email" });
+    }
+
+    let isPassword = await user.comparePass(password);
+    if (!isPassword) {
+      res.status(400).json({ message: "Please enter valid password" });
+    }
+
+    // Jwt token
+    const token = await generateToken(user._id);
+    // Set cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: true,
+    });
+
+    res.status(200).send({
+      message: "Login successful",
+      token,
+      user: {
+        _id: user._id,
+        email: user.email,
+        username: user.username,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error("Login failed", error);
+    return { status: "Login failed", message: "Internal error !" };
+  }
+});
 
 module.exports = router;
