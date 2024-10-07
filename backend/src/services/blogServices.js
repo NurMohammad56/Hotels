@@ -1,11 +1,10 @@
-const { query } = require("express");
 const blogModel = require("../models/blogModel");
 const commentModel = require("../models/commentModel");
 
 // Create blog
 const createBlog = async (req) => {
   try {
-    let newPost = new blogModel({ ...req.body });
+    let newPost = new blogModel({ ...req.body }); //todo author: req.userId
     await newPost.save();
     return { status: "success", data: newPost };
   } catch (error) {
@@ -46,7 +45,10 @@ const getBlog = async (req) => {
       };
     }
 
-    let getBlog = await blogModel.find(query).sort({ createdAt: -1 });
+    let getBlog = await blogModel
+      .find(query)
+      .populate("author", "email")
+      .sort({ createdAt: -1 });
     return { status: "sucess", data: getBlog };
   } catch (error) {
     return { status: "fail", message: "Error getting blog !" };
