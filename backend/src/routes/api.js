@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const generateToken = require("../middlewares/generateToken");
 const userModel = require("../models/authUserModel");
+const authentication = require("../middlewares/verifyToken");
 
 // Blog Controller
 const {
@@ -29,17 +30,17 @@ const {
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<BLOG ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Create a blog post
-router.post("/create-blog", createBlogs);
+router.post("/create-blog", authentication, createBlogs);
 // Read all blogs
 router.get("/blog", getBlogs);
 // Get single blog by id
 router.get("/blog/:id", getSingleBlogs);
 // Update blog
-router.patch("/update-blog/:id", updateBlogs);
+router.patch("/update-blog/:id", authentication, updateBlogs);
 // Delete blog
-router.delete("/blog/:id", deleteBlogs);
+router.delete("/blog/:id", authentication, deleteBlogs);
 // Find related blog
-router.get("/related-blog/:id", findRelatedBlogs);
+router.get("/related-blog/:id", authentication, findRelatedBlogs);
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENT ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Post comment

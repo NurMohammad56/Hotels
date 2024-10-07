@@ -6,6 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET_KEY;
 const generateToken = async (userId) => {
   try {
     const user = await userModel.findById(userId);
+
     if (!user) {
       throw new Error("User not found");
     }

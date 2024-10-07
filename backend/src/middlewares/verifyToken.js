@@ -1,0 +1,29 @@
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const JWT_SECRET = process.env.JWT_SECRET_KEY;
+
+const verifyToken = async (req, res, next) => {
+  try {
+    // const token = req.cokies.token;
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      res.status(401).send({ message: "No token provided" });
+    }
+
+    let decoded = jwt.verify(token, JWT_SECRET);
+    if (!decoded.userId) {
+      res.status(401).send({ message: "Invalid token provided" });
+    }
+
+    req.userId = decoded.userId;
+    req.role = decoded.role;
+    next();
+  } catch (error) {
+    console.error("Error verify token");
+    res.status(401).send({ message: "invalid token" });
+  }
+};
+
+module.exports = verifyToken;
