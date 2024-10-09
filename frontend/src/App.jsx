@@ -1,14 +1,15 @@
 import { Outlet } from "react-router-dom";
+import Navbar from "./component/Navbar";
 
 export default function App() {
   return (
     <>
-      <div>
-        <nav>Navbar</nav>
-        <div>
+      <div className="bg-bgPrimary min-h-screen flex flex-col">
+        <Navbar />
+        <div className="flex-grow">
           <Outlet />
         </div>
-        <footer>Footer</footer>
+        <footer className="mt-auto">Footer</footer>
       </div>
     </>
   );
