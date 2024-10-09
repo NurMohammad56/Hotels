@@ -19,7 +19,12 @@ const Navbar = () => {
             {navLists.map((list, index) => {
               return (
                 <li>
-                  <NavLink to={`${list.path}`}>{list.name}</NavLink>
+                  <NavLink
+                    className={({ isActive }) => (isActive ? "active" : "")}
+                    to={`${list.path}`}
+                  >
+                    {list.name}
+                  </NavLink>
                 </li>
               );
             })}
