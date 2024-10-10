@@ -1,3 +1,4 @@
+import Blog from "../blog/Blog";
 import Hero from "./Hero";
 
 const Home = () => {
@@ -5,8 +6,7 @@ const Home = () => {
     <>
       <div className="bg-white text-primary container mx-auto mt-6 p-6">
         <Hero />
-        <hr />
-        <div>Blogs</div>
+        <Blog />
       </div>
     </>
   );

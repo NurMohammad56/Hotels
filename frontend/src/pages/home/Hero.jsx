@@ -16,7 +16,7 @@ const Hero = () => {
   return (
     <div className="flex flex-col md:flex-row justify-between items-center md:gap-14 gap-8">
       <div className="md:w-1/2 w-full text-center">
-        <h1 className="md:text-4xl text-3xl font-bold md:leading-tight">
+        <h1 className="md:text-4xl text-3xl font-bold md:leading-tight ">
           Hotels With Best View Near Me
         </h1>
         <p className="py-3 ">
