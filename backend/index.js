@@ -8,7 +8,12 @@ const port = process.env.PORT || 4000;
 
 // parser options
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true, //Enable set cookie
+  })
+);
 
 async function main() {
   await mongoose.connect(process.env.MONGODB_URL);
