@@ -45,11 +45,11 @@ const getBlog = async (req) => {
       };
     }
 
-    let getBlog = await blogModel
+    let getData = await blogModel
       .find(query)
       .populate("author", "email")
       .sort({ createdAt: -1 });
-    return { status: "sucess", data: getBlog };
+    return getData;
   } catch (error) {
     return { status: "fail", message: "Error getting blog !" };
   }
