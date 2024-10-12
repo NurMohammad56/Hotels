@@ -5,3 +5,26 @@
 .active{
     color: #009808;
 }
+
+.editorjsdiv h2{
+    font-weight: 600;
+    font-size: 18px;
+
+}
+
+.editorjsdiv h3, h4, h5{
+    font-weight: 500;
+    font-size: 14px;
+    
+}
+
+.editorjsdiv li{
+    margin-bottom: 10px;
+    list-style-type: disc;
+    padding-left: 10px;
+    margin-left: 20px;
+}
+
+.editorjsdiv {
+    font-size: 15px;
+}

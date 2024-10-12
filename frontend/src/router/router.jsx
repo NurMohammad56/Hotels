@@ -4,7 +4,7 @@ import Home from "../pages/home/Home";
 import AboutUs from "../pages/miniPage/AboutUs";
 import PrivacyPolicy from "./../pages/miniPage/PrivacyPolicy";
 import ContactUs from "./../pages/miniPage/ContactUs";
-import SingleBlog from "../pages/blog/SingleBlog";
+import SingleBlog from "../pages/singleBlog/SingleBlog";
 
 const router = createBrowserRouter([
   {
