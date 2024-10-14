@@ -16,7 +16,10 @@ const SearchBlog = ({ search, handleSearchChange, handleSearch }) => {
         placeholder="Hotels with best view near me..."
         className="py-1 px-4 mr-5 mt-10 w-full bg-[#efefef] focus:outline-none focus:border rounded"
       />
-      <button className="bg-[#009808] py-1 px-4 mt-10 text-white rounded">
+      <button
+        onClick={handleSearch}
+        className="bg-[#009808] py-1 px-4 mt-10 text-white rounded"
+      >
         Search
       </button>
     </div>
