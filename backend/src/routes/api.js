@@ -41,7 +41,7 @@ router.patch("/update-blog/:id", authentication, updateBlogs);
 // Delete blog
 router.delete("/blog/:id", authentication, deleteBlogs);
 // Find related blog
-router.get("/related-blog/:id", authentication, findRelatedBlogs);
+router.get("/related-blog/:id", findRelatedBlogs);
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENT ROUTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Post comment

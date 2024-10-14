@@ -134,7 +134,7 @@ const relatedBlog = async (req) => {
 
     const relatedBlog = await blogModel.find(relatedQuery);
 
-    return { status: "Here are the related blog", data: relatedBlog };
+    return relatedBlog;
   } catch (error) {
     return {
       status: "Error fetching related blog",

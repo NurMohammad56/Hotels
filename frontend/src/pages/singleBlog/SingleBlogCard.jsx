@@ -1,5 +1,5 @@
 import React from "react";
-import { formateDate } from "./../../utility/formateDate";
+import { formateDate } from "../../utility/formateDate";
 import editorJs from "editorjs-html";
 
 const editorJsHtml = editorJs();

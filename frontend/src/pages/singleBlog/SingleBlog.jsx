@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useFetchBlogbyIdQuery } from "../../redux/features/blogs/blogsApi";
 import SingleBlogCard from "./SingleBlogCard";
 import Comments from "../blog/comment/Comments";
+import RelatedBlogs from "./RelatedBlogs";
 
 const SingleBlog = () => {
   const { id } = useParams();
@@ -19,7 +20,7 @@ const SingleBlog = () => {
               <Comments comments={blog?.comments} />
             </div>
             <div className="bg-white lg:w-1/3 w-full rounded">
-              Related blogs
+              <RelatedBlogs />
             </div>
           </div>
         )}
