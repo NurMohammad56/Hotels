@@ -1,17 +1,40 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginUserMutation } from "../../redux/features/auth/authApi";
 
 const Login = () => {
-  const { email, setEmail } = useState("");
-  const { password, setPassword } = useState("");
-  const { message, setMessage } = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  const [loginUser, { isLoading: loginLoading }] = useLoginUserMutation();
+
+  const navigate = useNavigate();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const data = {
+      email,
+      password,
+    };
+
+    try {
+      const res = await loginUser(data).unwrap();
+      console.log(res);
+      const { token, user } = res;
+
+      navigate("/");
+    } catch (error) {
+      setMessage("Please provide a valid email or password");
+    }
+  };
   return (
     <div className="max-w-sm bg-white mx-auto p-6 mt-10">
       <h2 className="text-2xl font-semibold pt-5">Please login</h2>
-      <form className="space-y-5 max-w-sm mx-auto pt-8">
+      <form onSubmit={handleLogin} className="space-y-5 max-w-sm mx-auto pt-8">
         <input
           type="email"
           value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full bg-bgPrimary focus:outline-none px-5 py-2"
           placeholder="Email"
           required
@@ -19,12 +42,16 @@ const Login = () => {
         <input
           type="password"
           value={password}
+          onChange={(e) => setPassword(e.target.value)}
           className="w-full bg-bgPrimary focus:outline-none px-5 py-2"
           placeholder="Password"
           required
         />
         {message && <p className="text-red-500">{message}</p>}
-        <button className="w-full mt-5 bg-primary hover:bg-[#009808] text-white font-medium py-2 rounded-md">
+        <button
+          disabled={loginLoading}
+          className="w-full mt-5 bg-primary hover:bg-[#009808] text-white font-medium py-2 rounded-md"
+        >
           Login
         </button>
       </form>
