@@ -5,6 +5,7 @@ import authApi from "./features/auth/authApi";
 export const store = configureStore({
   reducer: {
     [blogApi.reducerPath]: blogApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(blogApi.middleware),
