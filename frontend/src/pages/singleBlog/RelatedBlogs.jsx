@@ -19,18 +19,14 @@ const RelatedBlogs = () => {
               className="flex flex-col sm:flex-row sm:items-center gap-4 px-7 py-4 shadow-sm"
             >
               <div className="size-12">
-                <img
-                  src={blog.coverImg}
-                  alt=""
-                  className=" h-full w-full rounded-full ring-2  ring-green-700"
-                />
+                <img src={blog.coverImg} alt="" className=" h-full w-full" />
               </div>
               <div>
                 <h4 className="font-medium text-[#25a360] ">
                   {blog?.title.substring(0, 30)}...
                 </h4>
                 <p className="text-[12px]">
-                  {blog?.description.substring(0, 38)}...
+                  {blog?.description.substring(0, 30)}...
                 </p>
               </div>
             </Link>
