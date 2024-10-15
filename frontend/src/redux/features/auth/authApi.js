@@ -27,6 +27,14 @@ export const authApi = createApi({
         method: "POST",
       }),
     }),
+    getUser: builder.query({
+      query: () => ({
+        url: "/all-user",
+        method: "GET",
+      }),
+      refetchOnMount: true,
+      invalidatesTags: ["USER"],
+    }),
   }),
 });
 
