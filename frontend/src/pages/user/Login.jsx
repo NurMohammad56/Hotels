@@ -19,7 +19,6 @@ const Login = () => {
 
     try {
       const res = await loginUser(data).unwrap();
-      console.log(res);
       const { token, user } = res;
 
       navigate("/");
