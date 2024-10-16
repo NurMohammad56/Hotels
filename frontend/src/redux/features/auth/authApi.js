@@ -62,4 +62,5 @@ export const {
   useDeleteUserMutation,
   useUpdateUserMutation,
 } = authApi;
+
 export default authApi;

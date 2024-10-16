@@ -3,7 +3,11 @@ import { NavLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import avatar from "../asstes/hero-carosel/pexels-photo-261169.jpeg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useLogoutUserMutation } from "../redux/features/auth/authApi";
+
+import { logout } from "../redux/features/auth/authSlice";
 
 const navLists = [
   { name: "Home", path: "/" },
@@ -15,8 +19,11 @@ const navLists = [
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  const [logoutUser] = useLogoutUserMutation();
 
   return (
     <>
@@ -38,13 +45,31 @@ const Navbar = () => {
                 </li>
               );
             })}
-            {user && user.role === "admin" ? (
-              <li>
+            {user && user.role === "user" ? (
+              <li className="flex items-center gap-2">
                 <img src={avatar} alt="" className="size-7 rounded-3xl" />
+
+                <button
+                  onClick={handleLogout}
+                  className="bg-[#009808] py-1 px-4 text-white rounded"
+                >
+                  Logout
+                </button>
               </li>
             ) : (
               <li>
                 <NavLink to={"/login"}>Login</NavLink>
+              </li>
+            )}
+
+            {user && user.role === "admin" && (
+              <li className="flex items-center gap-2">
+                <img src={avatar} alt="" className="size-7 rounded-3xl" />
+                <Link to={"/dashboard"}>
+                  <button className="bg-[#009808] py-1 px-4 text-white rounded">
+                    Dashboard
+                  </button>
+                </Link>
               </li>
             )}
           </ul>

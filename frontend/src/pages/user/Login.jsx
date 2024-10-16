@@ -17,10 +17,9 @@ const Login = () => {
       email,
       password,
     };
-    console.log(data);
     try {
       const res = await loginUser(data).unwrap();
-      const { user, token } = res;
+      let { user, token } = res;
       dispatch(setUser(user));
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/");
