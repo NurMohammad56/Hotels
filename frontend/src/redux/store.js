@@ -1,3 +1,4 @@
+// src/store.js
 import { configureStore } from "@reduxjs/toolkit";
 import { blogApi } from "./features/blogs/blogsApi";
 import authApi from "./features/auth/authApi";
@@ -12,3 +13,5 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(blogApi.middleware, authApi.middleware),
 });
+
+export default store;

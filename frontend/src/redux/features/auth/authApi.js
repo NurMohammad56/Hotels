@@ -1,3 +1,4 @@
+// src/redux/features/auth/authApi.js
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const authApi = createApi({
@@ -33,7 +34,7 @@ export const authApi = createApi({
         method: "GET",
       }),
       refetchOnMount: true,
-      invalidatesTags: ["USER"],
+      invalidatesTags: ["user"],
     }),
     deleteUser: builder.mutation({
       query: (userId) => ({
@@ -48,7 +49,7 @@ export const authApi = createApi({
         body: { role },
       }),
       refetchOnMount: true,
-      invalidatesTags: ["USER"],
+      invalidatesTags: ["user"],
     }),
   }),
 });

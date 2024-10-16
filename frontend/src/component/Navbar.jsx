@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
+import avatar from "../asstes/hero-carosel/pexels-photo-261169.jpeg";
+import { useSelector } from "react-redux";
+
 const navLists = [
   { name: "Home", path: "/" },
   { name: "About Us", path: "/about-us" },
@@ -11,8 +14,10 @@ const navLists = [
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useSelector((state) => state.auth);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   return (
     <>
       <header className="bg-white py-6 border">
@@ -33,9 +38,15 @@ const Navbar = () => {
                 </li>
               );
             })}
-            <li>
-              <NavLink to={"/login"}>Login</NavLink>
-            </li>
+            {user && user.role === "admin" ? (
+              <li>
+                <img src={avatar} alt="" className="size-7 rounded-3xl" />
+              </li>
+            ) : (
+              <li>
+                <NavLink to={"/login"}>Login</NavLink>
+              </li>
+            )}
           </ul>
 
           {/* Toggle Menu */}

@@ -1,36 +1,40 @@
+// src/redux/features/auth/authSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-
-const isTokenInCookies = () => {
-  const token = document.cookie
-    .split(";")
-    .find((cookie) => cookie.trim().startsWith("token="));
-  return !!token;
-};
 
 const loadUserFromLocalStorage = () => {
   try {
     const serializedState = localStorage.getItem("user");
     if (serializedState === null) {
-      return { user: JSON.parse(serializedState) };
+      return { user: null };
     }
     return { user: JSON.parse(serializedState) };
   } catch (error) {
+    console.error("Error loading user from local storage", error);
     return { user: null };
   }
 };
 
 const initialState = loadUserFromLocalStorage();
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.user = action.payload.user;
-      localStorage.setItem("user", JSON.stringify(state.user));
+      state.user = action.payload;
+      try {
+        localStorage.setItem("user", JSON.stringify(state.user));
+      } catch (error) {
+        console.error("Error saving user to local storage", error);
+      }
     },
     logout: (state) => {
       state.user = null;
-      localStorage.removeItem("user");
+      try {
+        localStorage.removeItem("user");
+      } catch (error) {
+        console.error("Error removing user from local storage", error);
+      }
     },
   },
 });
