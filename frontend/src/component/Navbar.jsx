@@ -25,6 +25,13 @@ const Navbar = () => {
 
   const [logoutUser] = useLogoutUserMutation();
 
+  const handleLogout = async () => {
+    try {
+      await logoutUser().unwrap();
+      dispatch(logout());
+    } catch (error) {}
+  };
+
   return (
     <>
       <header className="bg-white py-6 border">
