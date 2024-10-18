@@ -1,13 +1,40 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { usePostCommentMutation } from "../../../redux/features/comments/commentApi";
 
 const PostComment = () => {
   const { id } = useParams();
-  const { comment, setComment } = useState("");
+  const [comment, setComment] = useState("");
+  const { user } = useSelector((state) => state.auth);
+  const navigation = useNavigate();
+  // console.log(user);
+  const [postComment] = usePostCommentMutation();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!user) {
+      alert("Please login to comment on the post");
+      navigation("/login");
+      return;
+    }
+    const newComment = {
+      comment: comment,
+      user: user?._id,
+      postID: id,
+    };
+    // console.log(newComment);
+    try {
+      const res = await postComment(newComment).unwrap();
+      console.log(res);
+    } catch (error) {
+      alert("An error occurred while posting comment");
+    }
+  };
   return (
     <div className="mt-6">
       <h3 className="text-lg font-medium mb-7">Leave a comment</h3>
-      <form>
+      <form onSubmit={handleSubmit}>
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
