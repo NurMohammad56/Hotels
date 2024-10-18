@@ -68,7 +68,7 @@ const getSingleBlog = async (req) => {
       .find({ postID: getID })
       .populate("user", "username, email");
 
-    return { status: "success", data: get };
+    return { status: "success", data: get, comment };
   } catch (error) {
     return { status: "fail", message: "Internal error !" };
   }
