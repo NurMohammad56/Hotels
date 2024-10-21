@@ -21,7 +21,7 @@ export const blogApi = createApi({
     }),
     postBlog: builder.mutation({
       query: (newBlog) => ({
-        url: `create-blog`,
+        url: `/create-blog`,
         method: "POST",
         body: newBlog,
         credentials: "include",
@@ -29,11 +29,20 @@ export const blogApi = createApi({
     }),
     updateBlog: builder.mutation({
       query: ({ id, ...rest }) => ({
-        url: `update-blog/${id}`,
+        url: `/update-blog/${id}`,
         method: "PATCH",
         body: rest,
         credentials: "include",
       }),
+      invalidatesTags: (result, error, { id }) => [{ type: "Blogs", id }],
+    }),
+    deleteBlog: builder.mutation({
+      query: (id) => ({
+        url: `/blog/${id}`,
+        method: "DELETE",
+        credentials: "include",
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: "Blogs", id }],
     }),
   }),
 });
@@ -42,4 +51,7 @@ export const {
   useFetchBlogsQuery,
   useFetchBlogbyIdQuery,
   useFetchRelatedBlogQuery,
+  useDeleteBlogMutation,
+  usePostBlogMutation,
+  useUpdateBlogMutation,
 } = blogApi;
