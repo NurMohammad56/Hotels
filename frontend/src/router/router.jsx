@@ -7,6 +7,7 @@ import ContactUs from "./../pages/miniPage/ContactUs";
 import SingleBlog from "../pages/singleBlog/SingleBlog";
 import Login from "../pages/user/Login";
 import Register from "../pages/user/Register";
+import AdminLayout from "../pages/admin/AdminLayout";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/dashboard",
+        element: <AdminLayout />,
       },
     ],
   },
