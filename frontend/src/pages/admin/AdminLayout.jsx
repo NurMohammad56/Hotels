@@ -9,6 +9,7 @@ const AdminLayout = () => {
   if (!user || user.role !== "admin") {
     return <Navigate to="/login" />;
   }
+  // Fetching admin dashboard problem
   return (
     <div className="container mx-auto flex flex-col md:flex-row gap-4 items-start justify-start mt-6">
       <header className="lg:w-1/5 sm:w-2/5 w-full">
