@@ -1,8 +1,22 @@
 import React from "react";
 import adminPng from "../../asstes/hero-carosel/admin.png";
 import { NavLink } from "react-router-dom";
+import { useLogoutUserMutation } from "../../redux/features/auth/authApi";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/features/auth/authSlice";
 
 const AdminNavigation = () => {
+  const [logoutUser] = useLogoutUserMutation();
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    try {
+      await logoutUser().unwrap();
+      dispatch(logout());
+    } catch (error) {
+      console.error("Faild to logout", error);
+    }
+  };
+
   return (
     <div className="space-y-5 bg-white p-6 md:h-[calc(100vh-98px)] flex flex-col justify-between">
       {/* Header section */}
@@ -16,6 +30,7 @@ const AdminNavigation = () => {
           <li>
             <NavLink
               to="/dashboard"
+              end
               className={({ isActive }) =>
                 isActive ? "text-green-600 font-bold" : ""
               }
@@ -61,7 +76,10 @@ const AdminNavigation = () => {
       </div>
       <div className="mb-3">
         <hr />
-        <button className="text-white bg-red-500 font-medium px-4 py-1 rounded-sm mt-2">
+        <button
+          onClick={handleLogout}
+          className="text-white bg-red-500 font-medium px-4 py-1 rounded-sm mt-2"
+        >
           Logout
         </button>
       </div>
