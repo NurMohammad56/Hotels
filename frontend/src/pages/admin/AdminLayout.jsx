@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 const AdminLayout = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
   if (!user || user.role !== "admin") {
     return <Navigate to="/login" />;
   }

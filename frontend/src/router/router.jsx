@@ -11,7 +11,9 @@ import AdminLayout from "../pages/admin/AdminLayout";
 import Dashboard from "../pages/admin/dashboard/Dashboard";
 import AddPost from "../pages/admin/post/AddPost";
 import ManagePost from "../pages/admin/post/ManagePost";
-import ManageUser from "../pages/admin/user/ManageUser";
+import AdminNavigation from "../pages/admin/AdminNavigation";
+import PrivateRouter from "./PrivateRouter";
+import ManageUser from "./../pages/admin/user/ManageUser";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +50,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <AdminLayout />,
+        element: (
+          <PrivateRouter>
+            <AdminLayout />
+          </PrivateRouter>
+        ),
         children: [
           {
             path: "",
