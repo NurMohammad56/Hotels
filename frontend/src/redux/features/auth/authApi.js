@@ -33,6 +33,7 @@ export const authApi = createApi({
         url: "/all-user",
         method: "GET",
       }),
+
       refetchOnMount: true,
       invalidatesTags: ["user"],
     }),

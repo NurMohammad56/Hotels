@@ -4,6 +4,7 @@ import { FaRegUser, FaBlog, FaComment } from "react-icons/fa";
 import { RiAdminLine } from "react-icons/ri";
 import { useFetchBlogsQuery } from "../../../redux/features/blogs/blogsApi";
 import { useGetCommentQuery } from "../../../redux/features/comments/commentApi";
+import { useGetUserQuery } from "../../../redux/features/auth/authApi";
 
 const Dashboard = () => {
   const [query, setQuery] = useState({ search: "", category: "" });
@@ -11,7 +12,9 @@ const Dashboard = () => {
   const { data: blogs = [], error, isLoading } = useFetchBlogsQuery(query);
   // console.log(blogs);
   const { data: comments = [] } = useGetCommentQuery();
-  // console.log(comments);
+  const { data: users = {} } = useGetUserQuery();
+  const adminUsers = users.user?.filter((user) => user.role === "admin"); // Works if `users` is an array
+  // console.log(adminUsers);
 
   return (
     <>
@@ -36,7 +39,7 @@ const Dashboard = () => {
           </div>
           <div className="bg-indigo-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
             <RiAdminLine className="size-8 text-indigo-600" />
-            <p>2 Admins</p>
+            <p>{adminUsers.length} Admins</p>
           </div>
           <div className="bg-amber-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
             <FaComment className="size-8 text-amber-600" />
