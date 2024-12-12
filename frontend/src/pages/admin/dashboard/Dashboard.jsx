@@ -31,7 +31,7 @@ const Dashboard = () => {
         <div className="flex flex-col md:flex-row justify-center pt-7 gap-8 rounded-md">
           <div className="bg-green-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
             <FaRegUser className="size-8 text-green-600" />
-            <p>{user.length} User</p>
+            <p>{users?.user.length} User</p>
           </div>
           <div className="bg-red-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
             <FaBlog className="size-8 text-red-600" />
@@ -39,7 +39,9 @@ const Dashboard = () => {
           </div>
           <div className="bg-indigo-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
             <RiAdminLine className="size-8 text-indigo-600" />
-            <p>{adminUsers.length} Admins</p>
+            <p>
+              {adminUsers.length} Admin{adminUsers !== 1 ? "s" : ""}
+            </p>
           </div>
           <div className="bg-amber-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
             <FaComment className="size-8 text-amber-600" />
