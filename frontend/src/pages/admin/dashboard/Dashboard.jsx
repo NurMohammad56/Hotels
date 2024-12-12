@@ -38,10 +38,10 @@ const Dashboard = () => {
             <RiAdminLine className="size-8 text-indigo-600" />
             <p>2 Admins</p>
           </div>
-          {/* <div className="bg-amber-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
+          <div className="bg-amber-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
             <FaComment className="size-8 text-amber-600" />
             <p>{comments?.data} Comments</p>
-          </div> */}
+          </div>
         </div>
       </div>
     </>
