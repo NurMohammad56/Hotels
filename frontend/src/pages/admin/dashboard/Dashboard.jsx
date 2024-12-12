@@ -11,7 +11,7 @@ const Dashboard = () => {
   const { data: blogs = [], error, isLoading } = useFetchBlogsQuery(query);
   // console.log(blogs);
   const { data: comments = [] } = useGetCommentQuery();
-  console.log(comments);
+  // console.log(comments);
 
   return (
     <>
@@ -28,7 +28,7 @@ const Dashboard = () => {
         <div className="flex flex-col md:flex-row justify-center pt-7 gap-8 rounded-md">
           <div className="bg-green-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
             <FaRegUser className="size-8 text-green-600" />
-            <p>{user?.length} User</p>
+            <p>{user.length} User</p>
           </div>
           <div className="bg-red-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
             <FaBlog className="size-8 text-red-600" />
@@ -38,10 +38,10 @@ const Dashboard = () => {
             <RiAdminLine className="size-8 text-indigo-600" />
             <p>2 Admins</p>
           </div>
-          <div className="bg-amber-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
+          {/* <div className="bg-amber-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center">
             <FaComment className="size-8 text-amber-600" />
-            <p>4 Comments</p>
-          </div>
+            <p>{comments?.data} Comments</p>
+          </div> */}
         </div>
       </div>
     </>

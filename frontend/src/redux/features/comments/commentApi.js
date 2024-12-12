@@ -15,12 +15,14 @@ const commentApi = createApi({
         body: commentData,
       }),
       invalidApi: (result, error, { postId }) => [
-        { types: "Comments", id: postId },
+        { type: "Comments", id: postId },
       ],
     }),
     getComment: builder.query({
-      query: "/all-comment",
-      method: "GET",
+      query: () => ({
+        url: "/all-comment",
+        method: "GET",
+      }),
     }),
   }),
 });
