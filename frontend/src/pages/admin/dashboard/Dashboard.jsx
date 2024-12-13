@@ -5,6 +5,7 @@ import { RiAdminLine } from "react-icons/ri";
 import { useFetchBlogsQuery } from "../../../redux/features/blogs/blogsApi";
 import { useGetCommentQuery } from "../../../redux/features/comments/commentApi";
 import { useGetUserQuery } from "../../../redux/features/auth/authApi";
+import BlogChart from "./BlogChart";
 
 const Dashboard = () => {
   const [query, setQuery] = useState({ search: "", category: "" });
@@ -46,6 +47,10 @@ const Dashboard = () => {
             <FaComment className="size-8 text-amber-600" />
             <p>{comments?.data} Comments</p>
           </div>
+        </div>
+        {/* graph and chart */}
+        <div className="pt-5 pb-5">
+          <BlogChart blogs={blogs} />
         </div>
       </div>
     </>
