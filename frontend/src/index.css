@@ -2,29 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-.active{
-    color: #009808;
+.active {
+  color: #009808;
 }
 
-.editorjsdiv h2{
-    font-weight: 600;
-    font-size: 18px;
-
+.editorjsdiv h2 {
+  font-weight: 600;
+  font-size: 18px;
 }
 
-.editorjsdiv h3, h4, h5{
-    font-weight: 500;
-    font-size: 14px;
-    
+.editorjsdiv h3,
+h4,
+h5 {
+  font-weight: 500;
+  font-size: 14px;
 }
 
-.editorjsdiv li{
-    margin-bottom: 10px;
-    list-style-type: disc;
-    padding-left: 10px;
-    margin-left: 20px;
+.editorjsdiv li {
+  margin-bottom: 10px;
+  list-style-type: disc;
+  padding-left: 10px;
+  margin-left: 20px;
 }
 
 .editorjsdiv {
-    font-size: 15px;
+  font-size: 15px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
