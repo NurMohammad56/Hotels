@@ -1,5 +1,7 @@
 const express = require("express");
 const router = require("./src/routes/api.js");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -8,6 +10,9 @@ const port = process.env.PORT || 4000;
 
 // parser options
 app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(
   cors({
     origin: "http://localhost:5173",

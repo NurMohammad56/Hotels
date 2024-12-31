@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import EditorJS from "@editorjs/editorjs";
 import List from "@editorjs/list";
 import Header from "@editorjs/header";
+import { usePostBlogMutation } from "../../../redux/features/blogs/blogsApi";
+import { useNavigate } from "react-router-dom";
 
 const AddPost = () => {
   const editorRef = useRef(null);
@@ -12,6 +14,8 @@ const AddPost = () => {
   const [category, Setcategory] = useState("");
   const [rating, Setrating] = useState(0);
   const [message, Setmessage] = useState("");
+
+  const [postBlog, { isLoading }] = usePostBlogMutation();
 
   const { user } = useSelector((state) => state.auth);
 
@@ -39,14 +43,29 @@ const AddPost = () => {
     };
   }, []);
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const content = await editorRef.current.save();
-      console.log(content);
+      const newPost = {
+        title,
+        coverImg,
+        content,
+        description: metaDes,
+        author: user?._id,
+        rating,
+      };
+      // console.log(newPost);
+      const response = await postBlog(newPost).unwrap();
+      console.log(response);
+      alert("Blog is posted successfully");
+      navigate("/");
     } catch (error) {
       console.log("Failed to submit post".error);
+      Setmessage("Faild to submit post please try again!");
     }
   };
 
