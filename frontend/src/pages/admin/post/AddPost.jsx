@@ -167,6 +167,7 @@ const AddPost = () => {
 
         {message && <p className="text-red-500">{message}</p>}
         <button
+          disabled={isLoading}
           className="w-full mt-4 bg-primary hover:bg-indigo-500 text-white font-medium py-1 rounded-md"
           type="submit"
         >
