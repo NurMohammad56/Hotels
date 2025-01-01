@@ -105,7 +105,7 @@ const deleteBlog = async (req) => {
     // Deleted comment
     await commentModel.deleteMany({ postID: postID });
 
-    return { status: "Blog deleted successfully", data: deleteBlog };
+    return { message: "Blog deleted successfully", data: deleteBlog };
   } catch (error) {
     return { status: "Error deleting blog", message: "Internal error !" };
   }

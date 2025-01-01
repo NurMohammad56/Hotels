@@ -1,10 +1,31 @@
 import React, { useState } from "react";
-import { useFetchBlogsQuery } from "../../../redux/features/blogs/blogsApi";
+import { Link } from "react-router-dom";
+import {
+  useDeleteBlogMutation,
+  useFetchBlogsQuery,
+} from "../../../redux/features/blogs/blogsApi";
 import { formateDate } from "./../../../utility/formateDate";
+import { MdOutlineEdit } from "react-icons/md";
 
 const ManagePost = () => {
   const [query, setQuery] = useState({ search: "", category: "" });
-  const { data: blog = [], error, isLoading } = useFetchBlogsQuery(query);
+  const {
+    data: blog = [],
+    error,
+    isLoading,
+    refetch,
+  } = useFetchBlogsQuery(query);
+  const [deleteBlog] = useDeleteBlogMutation();
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteBlog(id).unwrap();
+      alert(response.message);
+      refetch();
+    } catch (error) {
+      console.error("Failed to delete blog", error);
+    }
+  };
   return (
     <>
       {isLoading && <div>Loading....</div>}
@@ -65,11 +86,23 @@ const ManagePost = () => {
                         <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           {formateDate(blogs.createdAt)}
                         </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4">
-                          46,53%
+                        <td className="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-wrap p-4">
+                          <Link
+                            to={`/dashboard/update-item/${blogs?._id}`}
+                            className="hover:text-blue-700 "
+                          >
+                            <span className="flex gap-1 justify-center items-center">
+                              <MdOutlineEdit /> Edit
+                            </span>
+                          </Link>
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4">
-                          46,53%
+                          <button
+                            onClick={() => handleDelete(blogs._id)}
+                            className="bg-red-600 text-white px-2 py-1"
+                          >
+                            Remove
+                          </button>
                         </td>
                       </tr>
                     ))}
