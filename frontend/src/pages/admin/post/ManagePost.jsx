@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useFetchBlogsQuery } from "../../../redux/features/blogs/blogsApi";
+import { formateDate } from "./../../../utility/formateDate";
 
 const ManagePost = () => {
   const [query, setQuery] = useState({ search: "", category: "" });
@@ -58,16 +59,16 @@ const ManagePost = () => {
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
                           {index + 1}
                         </th>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4 ">
                           {blogs.title}
                         </td>
                         <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          340
+                          {formateDate(blogs.createdAt)}
                         </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4">
                           46,53%
                         </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4">
                           46,53%
                         </td>
                       </tr>
