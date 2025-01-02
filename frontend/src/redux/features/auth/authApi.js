@@ -42,6 +42,8 @@ export const authApi = createApi({
         url: `/delete-user/${userId}`,
         method: "DELETE",
       }),
+      refetchOnMount: true,
+      invalidatesTags: ["user"],
     }),
     updateUser: builder.mutation({
       query: ({ userId, role }) => ({

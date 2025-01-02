@@ -1,11 +1,27 @@
 import React, { useState } from "react";
-import { useGetUserQuery } from "../../../redux/features/auth/authApi";
+import {
+  useDeleteUserMutation,
+  useGetUserQuery,
+} from "../../../redux/features/auth/authApi";
 import { MdOutlineEdit } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const ManageUser = () => {
   const [selectUser, setSelectUser] = useState(null);
   const { data, error, isLoading, refetch } = useGetUserQuery();
+  const [deleteUser] = useDeleteUserMutation();
+  const navigate = useNavigate();
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteUser(id).unwrap();
+      alert("User deleted successfully");
+      refetch;
+      navigate("/dashboard/user");
+    } catch (error) {
+      console.error("Failed to delete user", error);
+    }
+  };
   return (
     <>
       {isLoading && <div>Loading....</div>}
@@ -63,7 +79,9 @@ const ManageUser = () => {
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4 ">
                           {users.email}
                         </td>
-                        <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>
+                        <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                          {users.role}
+                        </td>
                         <td className="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-wrap p-4">
                           <button className="hover:text-blue-700 ">
                             <span className="flex gap-1 justify-center items-center">
@@ -73,7 +91,7 @@ const ManageUser = () => {
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4">
                           <button
-                            onClick={() => handleDelete(blogs._id)}
+                            onClick={() => handleDelete(users._id)}
                             className="bg-red-600 text-white px-2 py-1"
                           >
                             Remove
