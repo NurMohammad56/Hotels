@@ -4,12 +4,13 @@ import EditorJS from "@editorjs/editorjs";
 import List from "@editorjs/list";
 import Header from "@editorjs/header";
 import {
-  usePostBlogMutation,
+  useFetchBlogbyIdQuery,
   useUpdateBlogMutation,
 } from "../../../redux/features/blogs/blogsApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddPost = () => {
+  const { id } = useParams();
   const editorRef = useRef(null);
   const [title, setTitle] = useState("");
   const [coverImg, SetcoverImg] = useState("");
@@ -17,33 +18,36 @@ const AddPost = () => {
   const [category, Setcategory] = useState("");
   const [rating, Setrating] = useState(0);
   const [message, Setmessage] = useState("");
-
-  const [postBlog, { isLoading }] = usePostBlogMutation();
+  const [updateBlog] = useUpdateBlogMutation();
+  const { data: blog = {}, isLoading, refetch } = useFetchBlogbyIdQuery(id);
 
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    const editor = new EditorJS({
-      holder: "editorjs",
-      onReady: () => {
-        editorRef.current = editor;
-      },
-      autofocus: true,
-      tools: {
-        header: {
-          class: Header,
-          inlineToolbar: true,
+    if (blog.data) {
+      const editor = new EditorJS({
+        holder: "editorjs",
+        onReady: () => {
+          editorRef.current = editor;
         },
-        list: {
-          class: List,
-          inlineToolbar: true,
+        autofocus: true,
+        tools: {
+          header: {
+            class: Header,
+            inlineToolbar: true,
+          },
+          list: {
+            class: List,
+            inlineToolbar: true,
+          },
         },
-      },
-    });
-    return () => {
-      editor.destroy();
-      editorRef.current = null;
-    };
+        data: blog.data.content,
+      });
+      return () => {
+        editor.destroy();
+        editorRef.current = null;
+      };
+    }
   }, []);
 
   const navigate = useNavigate();
@@ -53,34 +57,35 @@ const AddPost = () => {
 
     try {
       const content = await editorRef.current.save();
-      const newPost = {
-        title,
-        coverImg,
+      const updateData = {
+        title: title || blog.data.title,
+        coverImg: coverImg || blog.data.coverImg,
         content,
-        description: metaDes,
+        description: metaDes || blog.data.description,
         author: user?._id,
-        rating,
+        rating: rating || blog.data.rating,
       };
-      // console.log(newPost);
-      const response = await postBlog(newPost).unwrap();
-      console.log(response);
-      alert("Blog is posted successfully");
-      navigate("/");
+
+      const response = await updateBlog({ id, ...updateData }).unwrap();
+      //   console.log(response);
+      alert("Blog is updated successfully");
+      refetch();
+      navigate("/dashboard");
     } catch (error) {
-      console.log("Failed to submit post".error);
-      Setmessage("Faild to submit post please try again!");
+      console.log("Failed to update post".error);
+      Setmessage("Faild to update post please try again!");
     }
   };
 
   return (
     <div className="bg-white md:p-3 p-2">
-      <h2 className="text-2xl font-semibold">Create A New Blog Post</h2>
+      <h2 className="text-2xl font-semibold">Edit or Manage Blog Post</h2>
       <form onSubmit={handleSubmit} className="space-y-5 pt-6">
         <div className="space-y-3">
           <label className="font-semibold text-xl">Blog Title:</label>
           <input
             className="w-full inline-block bg-bgPrimary focus:outline-none px-1 py-2"
-            value={title}
+            defaultValue={blog?.data?.title}
             onChange={(e) => setTitle(e.target.value)}
             type="text"
             placeholder="Write here..."
@@ -93,20 +98,20 @@ const AddPost = () => {
           {/* left side */}
           <div className="border p-4 w-2/3">
             <p className="font-semibold text-lg mb-4">Content Section</p>
-            <p className="text-xs italic">Write your post bellow here</p>
+            <p className="text-xs italic">Edit your post bellow here</p>
             <div id="editorjs"></div>
           </div>
 
           {/* right side */}
           <div className="border p-4 w-1/3 space-y-5">
-            <p className="text-lg font-semibold">Choose Blog Format</p>
+            <p className="text-lg font-semibold">Edit Blog Format</p>
 
             {/* images */}
             <div className="space-y-3">
               <label className="font-semibold text-sm">Blog Cover:</label>
               <input
                 className="w-full inline-block bg-bgPrimary focus:outline-none px-1 py-1"
-                value={coverImg}
+                defaultValue={blog?.data?.coverImg}
                 onChange={(e) => SetcoverImg(e.target.value)}
                 type="text"
                 placeholder="https://unsplash.com/image/cover-photo-blog1.png..."
@@ -119,7 +124,7 @@ const AddPost = () => {
               <label className="font-semibold text-sm">Category:</label>
               <input
                 className="w-full inline-block bg-bgPrimary focus:outline-none px-1 py-1"
-                value={category}
+                defaultValue={blog?.data?.category}
                 onChange={(e) => Setcategory(e.target.value)}
                 type="text"
                 placeholder="Hotels/Travel/Adventure"
@@ -134,7 +139,7 @@ const AddPost = () => {
                 cols={4}
                 rows={4}
                 className="w-full inline-block bg-bgPrimary focus:outline-none px-1 py-1"
-                value={metaDes}
+                defaultValue={blog?.data?.description}
                 onChange={(e) => SetmetaDes(e.target.value)}
                 type="text"
                 placeholder="Write your meta description"
@@ -147,7 +152,7 @@ const AddPost = () => {
               <label className="font-semibold text-sm">Rating:</label>
               <input
                 className="w-full inline-block bg-bgPrimary focus:outline-none px-1 py-1"
-                value={rating}
+                defaultValue={blog?.data?.rating}
                 onChange={(e) => Setrating(e.target.value)}
                 type="number"
                 required
@@ -173,8 +178,9 @@ const AddPost = () => {
           disabled={isLoading}
           className="w-full mt-4 bg-primary hover:bg-indigo-500 text-white font-medium py-1 rounded-md"
           type="submit"
+          onClick={handleSubmit}
         >
-          Add new blog
+          Update Blog
         </button>
       </form>
     </div>

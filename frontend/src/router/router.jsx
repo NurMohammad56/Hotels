@@ -14,6 +14,7 @@ import ManagePost from "../pages/admin/post/ManagePost";
 import AdminNavigation from "../pages/admin/AdminNavigation";
 import PrivateRouter from "./PrivateRouter";
 import ManageUser from "./../pages/admin/user/ManageUser";
+import UpdatePost from "../pages/admin/post/UpdatePost";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
           {
             path: "user",
             element: <ManageUser />,
+          },
+          {
+            path: "update-item/:id",
+            element: <UpdatePost />,
           },
         ],
       },
