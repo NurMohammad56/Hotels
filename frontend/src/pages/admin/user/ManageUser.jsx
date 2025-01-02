@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useGetUserQuery } from "../../../redux/features/auth/authApi";
+import { MdOutlineEdit } from "react-icons/md";
 
 const ManageUser = () => {
   const [selectUser, setSelectUser] = useState(null);
-  const { data: user = [], error, isLoading, refetch } = useGetUserQuery();
-  console.log(user);
+  const { data, error, isLoading, refetch } = useGetUserQuery();
+
   return (
     <>
       {isLoading && <div>Loading....</div>}
@@ -16,7 +17,7 @@ const ManageUser = () => {
               <div className="flex flex-wrap items-center">
                 <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                   <h3 className="font-semibold text-base text-blueGray-700">
-                    All Blogs
+                    All User
                   </h3>
                 </div>
                 <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
@@ -38,10 +39,10 @@ const ManageUser = () => {
                       No.
                     </th>
                     <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                      Blog name
+                      User Email
                     </th>
                     <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                      Publishing date
+                      User Role
                     </th>
                     <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                       Edit & Manage
@@ -53,38 +54,33 @@ const ManageUser = () => {
                 </thead>
 
                 <tbody>
-                  {/* {blog &&
-                      blog.map((blogs, index) => (
-                        <tr key={index}>
-                          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                            {index + 1}
-                          </th>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4 ">
-                            {blogs.title}
-                          </td>
-                          <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            {formateDate(blogs.createdAt)}
-                          </td>
-                          <td className="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-wrap p-4">
-                            <Link
-                              to={`/dashboard/update-item/${blogs?._id}`}
-                              className="hover:text-blue-700 "
-                            >
-                              <span className="flex gap-1 justify-center items-center">
-                                <MdOutlineEdit /> Edit
-                              </span>
-                            </Link>
-                          </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4">
-                            <button
-                              onClick={() => handleDelete(blogs._id)}
-                              className="bg-red-600 text-white px-2 py-1"
-                            >
-                              Remove
-                            </button>
-                          </td>
-                        </tr>
-                      ))} */}
+                  {data?.user &&
+                    data.user.map((users, index) => (
+                      <tr key={index}>
+                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                          {index + 1}
+                        </th>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4 ">
+                          {users.email}
+                        </td>
+                        <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>
+                        <td className="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-wrap p-4">
+                          <button className="hover:text-blue-700 ">
+                            <span className="flex gap-1 justify-center items-center">
+                              <MdOutlineEdit /> Edit
+                            </span>
+                          </button>
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4">
+                          <button
+                            onClick={() => handleDelete(blogs._id)}
+                            className="bg-red-600 text-white px-2 py-1"
+                          >
+                            Remove
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
