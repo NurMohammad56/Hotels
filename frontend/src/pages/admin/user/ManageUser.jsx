@@ -5,9 +5,11 @@ import {
 } from "../../../redux/features/auth/authApi";
 import { MdOutlineEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import UpdateUserModal from "./UpdateUserModal";
 
 const ManageUser = () => {
   const [selectUser, setSelectUser] = useState(null);
+  const [isModalOpen, setisModalOpen] = useState(false);
   const { data, error, isLoading, refetch } = useGetUserQuery();
   const [deleteUser] = useDeleteUserMutation();
   const navigate = useNavigate();
@@ -21,6 +23,16 @@ const ManageUser = () => {
     } catch (error) {
       console.error("Failed to delete user", error);
     }
+  };
+
+  const handleEdit = (user) => {
+    setSelectUser(user);
+    setisModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setisModalOpen(false);
+    setSelectUser(null);
   };
   return (
     <>
@@ -80,13 +92,22 @@ const ManageUser = () => {
                           {users.email}
                         </td>
                         <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          {users.role}
+                          <span
+                            className={`rounded-full py-[2px] px-3 ${
+                              users.role === "admin"
+                                ? "bg-indigo-500 text-white"
+                                : "bg-amber-300"
+                            } `}
+                          >
+                            {users.role}
+                          </span>
                         </td>
                         <td className="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-wrap p-4">
-                          <button className="hover:text-blue-700 ">
-                            <span className="flex gap-1 justify-center items-center">
-                              <MdOutlineEdit /> Edit
-                            </span>
+                          <button
+                            onClick={() => handleEdit(users)}
+                            className="flex gap-1 justify-center items-center"
+                          >
+                            <MdOutlineEdit /> Edit
                           </button>
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-wrap p-4">
@@ -105,6 +126,13 @@ const ManageUser = () => {
           </div>
         </div>
       </section>
+      {isModalOpen && (
+        <UpdateUserModal
+          user={selectUser}
+          onClose={handleCloseModal}
+          onRoleUpdate={refetch}
+        />
+      )}
     </>
   );
 };
